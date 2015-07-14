@@ -42,11 +42,11 @@ git checkout HEAD -- $SOURCE_FILENAME_WITH_EXTENSION
 ## Run the benchmarks
 cd "$DIRECTORY_CONTAINING_THIS_SCRIPT"
 
-node perf.js
+# node perf.js
 
 
 
-## Remove the old version of the source
-cd "$REPOSITORY_ROOT"
+# ## Remove the old version of the source
+# cd "$REPOSITORY_ROOT"
 
-rm $OLD_VERSION_FILENAME_WITH_EXTENSION
+# rm $OLD_VERSION_FILENAME_WITH_EXTENSION

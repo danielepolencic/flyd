@@ -6,6 +6,7 @@ var Benchmark = require('benchmark');
 // doesn't allow for anything simpler
 global.stream    = require('../flyd').stream;
 global.oldStream = require('../flyd-old').stream;
+global.Alt = require('../alternate');
 
 // ************************************************
 // Util functions
@@ -97,6 +98,17 @@ suites.push(Benchmark.Suite('static dependencies').add('New', {
   fn: function() {
     s(12);
   },
+}).add('Alt', {
+  setup: function() {
+    var m = new Alt();
+    var s = m.stream();
+    m.stream([s], function() {
+      return s();
+    });
+  },
+  fn: function() {
+    s(12);
+  },
 }));
 
 suites.push(Benchmark.Suite('map').add('First', {
@@ -115,6 +127,19 @@ suites.push(Benchmark.Suite('map').add('First', {
   setup: function() {
     function f(x) { return x; }
     var s1 = stream();
+    var s2 = s1.map(f);
+    var s3 = s2.map(f);
+    var s4 = s3.map(f);
+    var s5 = s4.map(f);
+  },
+  fn: function() {
+    s1(12);
+  },
+}).add('Alt', {
+  setup: function() {
+    var m = new Alt();
+    function f(x) { return x; }
+    var s1 = m.stream();
     var s2 = s1.map(f);
     var s3 = s2.map(f);
     var s4 = s3.map(f);
